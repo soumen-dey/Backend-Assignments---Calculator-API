@@ -22,11 +22,11 @@ var getErrorResponse = (message = null) => {
 }
 
 var getResponse = (message = null, result) => {
-    return JSON.stringify({
+    return {
         status: 'success',
         message: message,
         result: result,
-    })
+    }
 }
 
 app.get('/', (req, res) => {
