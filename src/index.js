@@ -29,6 +29,11 @@ var getResponse = (message = null, result) => {
     })
 }
 
+app.get('/', (req, res) => {
+    res.send('Hello world!');
+    res.end();
+});
+
 app.post('/add', (req, res) => {
     
     let body = req.body;
