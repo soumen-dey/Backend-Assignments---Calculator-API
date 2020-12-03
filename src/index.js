@@ -14,11 +14,11 @@ app.use(bodyParser.json())
 // your code goes here
 
 var getErrorResponse = (message = null) => {
-    return JSON.stringify({
+    return {
         status: 'error',
         message: message,
         result: null,
-    });
+    };
 }
 
 var getResponse = (message = null, result) => {
@@ -39,19 +39,31 @@ app.post('/add', (req, res) => {
     let body = req.body;
 
     if (typeof body.num1 === 'string' || typeof body.num2 === 'string') {
-        res.send(getErrorResponse('Invalid data types'));
+        res.send({
+            status: 'error',
+            message: 'Invalid data types',
+            sum: null,
+        });
         res.end();
         return;
     }
 
     if (body.num1 > 1000000 || body.num2 > 1000000) {
-        res.send(getErrorResponse('Overflow'));
+        res.send({
+            status: 'error',
+            message: 'Overflow',
+            sum: null,
+        });
         res.end();
         return;
     }
 
     if (body.num1 < -1000000 || body.num2 < -1000000) {
-        res.send(getErrorResponse('Underflow'));
+        res.send({
+            status: 'error',
+            message: 'Underflow',
+            sum: null,
+        });
         res.end();
         return;
     }
@@ -59,18 +71,31 @@ app.post('/add', (req, res) => {
     let sum = body.num1 + body.num2;
 
     if (sum > 1000000) {
-        res.send(getErrorResponse('Overflow'));
+        res.send({
+            status: 'error',
+            message: 'Overflow',
+            sum: null,
+        });
         res.end();
         return;
     }
 
     if (sum < -1000000) {
-        res.send(getErrorResponse('Underflow'));
+        res.send({
+            status: 'error',
+            message: 'Underflow',
+            sum: null,
+        });
         res.end();
         return;
     }
+    
+    res.send({
+        status: 'success',
+        message: 'the sum of given two numbers',
+        sum: sum,
+    });
 
-    res.send(getResponse('the sum of given two numbers', sum));
     res.end();
     return;
 
@@ -81,19 +106,31 @@ app.post('/sub', (req, res) => {
     let body = req.body;
 
     if (typeof body.num1 === 'string' || typeof body.num2 === 'string') {
-        res.send(getErrorResponse('Invalid data types'));
+        res.send({
+            status: 'error',
+            message: 'Invalid data types',
+            difference: null,
+        });
         res.end();
         return;
     }
 
     if (body.num1 > 1000000 || body.num2 > 1000000) {
-        res.send(getErrorResponse('Overflow'));
+        res.send({
+            status: 'error',
+            message: 'Overflow',
+            difference: null,
+        });
         res.end();
         return;
     }
 
     if (body.num1 < -1000000 || body.num2 < -1000000) {
-        res.send(getErrorResponse('Underflow'));
+        res.send({
+            status: 'error',
+            message: 'Underflow',
+            difference: null,
+        });
         res.end();
         return;
     }
@@ -101,12 +138,21 @@ app.post('/sub', (req, res) => {
     let sub = body.num1 - body.num2;
 
     if (sub < -1000000) {
-        res.send(getErrorResponse('Underflow'));
+        res.send({
+            status: 'error',
+            message: 'Underflow',
+            difference: null,
+        });
         res.end();
         return;
     }
+    
+    res.send({
+        status: 'success',
+        message: 'the difference of given two numbers',
+        differnce: sub,
+    });
 
-    res.send(getResponse('the difference of given two numbers', sub));
     res.end();
     return;
 
